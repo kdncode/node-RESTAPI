@@ -56,7 +56,7 @@ app.post('/movies', (req, res) => {
     movieStore.add(req.body)
 
     return res.send({
-        message: "Movie added successfully!"
+        message: "Added movie successfully!"
     })
 })
 
@@ -71,7 +71,25 @@ app.put('/movies/:title', (req, res) => {
     }
 
     return res.send({
-        message: "Update movie successfully"
+        message: "Updated movie successfully"
+    })
+})
+
+
+// DELETE movie
+app.delete('/movies/:title', (req, res) => {
+
+    if (!movieStore.has(req.params.title)) {
+        res.statusCode = 404 
+        return res.send({
+            message: "Movie not found"
+        })
+    }
+
+    movieStore.remove(req.params.title)
+
+    return res.send({
+        message: "Deleted movie successfully"
     })
 })
 
