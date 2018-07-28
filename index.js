@@ -18,12 +18,28 @@ app.get('/', (req, res) => {
     res.redirect('/movies')
 })
 
+function paginate(data, size, page) {
+    let index = page - 1;
+    return data.slice(index * size, (index + 1) * size)
+}
+
 // SEARCH Movie
 app.get('/movies', (req, res) => {
     let movies = movieStore.search(req.query.title)
 
+    let page = parseInt(req.query.page) || 1,
+        size = parseInt(req.query.size) || 2;
+
+    console.log(page, size);
+
+    let results = paginate(movies, size, page)
+
     return res.send({
-        payload: movies
+        title: req.query.title,
+        totalPage: movies, length,
+        page: page, 
+        size: size,
+        payload: results
     })
 })
 
