@@ -18,6 +18,15 @@ app.get('/', (req, res) => {
     res.redirect('/movies')
 })
 
+// SEARCH Movie
+app.get('/movies', (req, res) => {
+    let movies = movieStore.search(req.query.title)
+
+    return res.send({
+        payload: movies
+    })
+})
+
 // GET Movie title
 app.get('/movies/:title', (req, res) => {   
     
