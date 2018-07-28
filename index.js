@@ -1,13 +1,13 @@
 let express = require('express')
 let app = express()
 
+const datastore = require('./datastore.json')
+
 let aboutHandler = (req, res) => {
-    res.send('New about me by handler')
+    return res.send(datastore)
 }
 
-app.get('/', (req, res) => {
-    res.send('Hello world')
-})
+app.get('/', aboutHandler)
 
 app.get('/about', aboutHandler)
 
