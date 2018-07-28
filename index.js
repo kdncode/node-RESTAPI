@@ -1,15 +1,17 @@
 let express = require('express')
 let app = express()
 
-const datastore = require('./datastore.json')
+let MovieStore = require('./MovieStore')
+let movieStore = new MovieStore();
 
-let aboutHandler = (req, res) => {
-    return res.send(datastore)
-}
+app.get('/movies', (req, res) => {
+    res.send(movieStore.all())
+})
 
-app.get('/', aboutHandler)
-
-app.get('/about', aboutHandler)
+// Redirect Movies page to Home page
+app.get('/', (req, res) => {
+    res.redirect('/movies')
+})
 
 app.listen(8000, () => {
     console.log('Server is running...')
