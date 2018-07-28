@@ -36,7 +36,22 @@ app.get('/movies/:title', (req, res) => {
 
 // POST Movie
 app.post('/movies', (req, res) => {
-    console.log(req.body);
+    
+    // Check if movie's title is null || space
+    if (!req.body.Title || req.body.Title.trim().length < 1) {
+        res.statusCode = 400
+        return res.send({
+            message: "Missing or invalid title"
+        })
+    }
+
+    // Check if movie already exists
+    if (movieStore.has(req.body.Title)) {
+        res.statusCode = 400
+        return res.send({
+            message: "Movie already existed"
+        })
+    }
 
     movieStore.add(req.body)
 
