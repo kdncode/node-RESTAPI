@@ -60,6 +60,21 @@ app.post('/movies', (req, res) => {
     })
 })
 
+// UPDATE or PUT movie
+app.put('/movies/:title', (req, res) => {
+
+    if (!movieStore.update(req.params.title, req.body)) {
+        res.statusCode = 500 // internal server error
+        return res.send({
+            message: "Failed to update movie info"
+        })
+    }
+
+    return res.send({
+        message: "Update movie successfully"
+    })
+})
+
 app.listen(8000, () => {
     console.log('Server is running...')
 })
